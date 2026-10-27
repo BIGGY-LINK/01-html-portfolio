@@ -23,9 +23,26 @@
   --max-width: 1100px;
 }
 
-/* Use high-contrast dark surfaces and text when the visitor prefers dark mode. */
+/* Use high-contrast dark surfaces and text when dark mode is selected. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #10191d;
+  --color-surface: #18262b;
+  --color-text: #f2f7f6;
+  --color-muted: #b8c5c6;
+  --color-accent: #5bd6c3;
+  --color-on-accent: #10191d;
+  --color-border: #34464b;
+  --color-accent-soft: #213d3b;
+  --color-accent-strong: #91eadb;
+  --color-image-bg: #213d3b;
+  --color-bg-glow: rgb(91 214 195 / 10%);
+  --color-bg-glow-soft: rgb(91 214 195 / 5%);
+}
+
+/* Follow the operating system theme until the visitor chooses one. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     color-scheme: dark;
     --color-bg: #10191d;
     --color-surface: #18262b;
@@ -163,7 +180,7 @@ header {
   z-index: 10;
   top: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
   gap: var(--space-1) var(--space-3);
   padding: var(--space-3) max(var(--space-3), calc((100% - var(--max-width)) / 2));
@@ -213,6 +230,26 @@ header > p {
 }
 
 .menu-toggle:hover {
+  background: var(--color-accent-soft);
+}
+
+/* Keep the theme control visible and consistent with the header controls. */
+.theme-toggle {
+  grid-column: 3;
+  grid-row: 1;
+  min-height: 44px;
+  padding-inline: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
   background: var(--color-accent-soft);
 }
 
@@ -460,7 +497,7 @@ footer {
 /* Use a two-column introduction and inline navigation on tablet widths. */
 @media (min-width: 768px) {
   header {
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     gap: var(--space-2) var(--space-5);
   }
 
@@ -476,6 +513,11 @@ footer {
   nav.is-open {
     display: block;
     grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .theme-toggle {
+    grid-column: 3;
     grid-row: 1 / span 2;
   }
 
