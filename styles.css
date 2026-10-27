@@ -1,0 +1,473 @@
+/* Define reusable colors, spacing, shape, and content-width tokens. */
+:root {
+  color-scheme: light;
+  --color-bg: #f5f7f6;
+  --color-surface: #ffffff;
+  --color-text: #172a35;
+  --color-muted: #60717a;
+  --color-accent: #087f75;
+  --color-on-accent: #ffffff;
+  --color-border: #e3eae8;
+  --color-accent-soft: #e8f4f2;
+  --color-accent-strong: #075e57;
+  --color-image-bg: #e8f1ef;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --radius: 1rem;
+  --max-width: 1100px;
+}
+
+/* Use high-contrast dark surfaces and text when the visitor prefers dark mode. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-bg: #10191d;
+    --color-surface: #18262b;
+    --color-text: #f2f7f6;
+    --color-muted: #b8c5c6;
+    --color-accent: #5bd6c3;
+    --color-on-accent: #10191d;
+    --color-border: #34464b;
+    --color-accent-soft: #213d3b;
+    --color-accent-strong: #91eadb;
+    --color-image-bg: #213d3b;
+  }
+}
+
+/* Use predictable sizing and remove browser-default margins. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+/* Set small-screen document defaults and provide space for sticky navigation. */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Keep images and other media within their available space. */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Match form controls to the surrounding system font. */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Allow long text and headings to wrap rather than widen the viewport. */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+  overflow-wrap: anywhere;
+}
+
+/* Scale heading sizes fluidly while keeping a readable mobile baseline. */
+h1 {
+  font-size: clamp(1.1rem, 5vw, 2rem);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.65rem, 4vw, 2.5rem);
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  line-height: 1.3;
+}
+
+/* Make links identifiable and keyboard focus clearly visible. */
+a {
+  color: var(--color-accent);
+  font-weight: 650;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+a:hover {
+  color: var(--color-text);
+}
+
+a:focus-visible,
+button:focus-visible {
+  border-radius: var(--space-1);
+  outline: 3px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* Keep a visible skip link available as the first keyboard stop. */
+.skip-link {
+  position: fixed;
+  z-index: 20;
+  top: var(--space-3);
+  left: var(--space-3);
+  transform: translateY(calc(-100% - var(--space-3)));
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--space-1);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Keep the identity and compact menu control visible while scrolling. */
+header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3) max(var(--space-3), calc((100% - var(--max-width)) / 2));
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 0 0.25rem 1rem rgb(23 42 53 / 5%);
+  backdrop-filter: blur(12px);
+}
+
+header h1 {
+  grid-column: 1;
+  grid-row: 1;
+  letter-spacing: -0.035em;
+}
+
+header > p {
+  grid-column: 1;
+  grid-row: 2;
+  color: var(--color-muted);
+  font-size: 0.65rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+/* Render a touch-friendly hamburger button on small screens. */
+.menu-toggle {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  place-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 21px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.menu-toggle:hover {
+  background: var(--color-accent-soft);
+}
+
+/* Hide the mobile navigation until its button opens it. */
+nav {
+  display: none;
+  grid-column: 1 / -1;
+  grid-row: 3;
+  min-width: 0;
+}
+
+nav.is-open {
+  display: block;
+}
+
+nav ul,
+#contact ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+nav a {
+  display: inline-block;
+  padding-block: var(--space-1);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--color-accent);
+}
+
+/* Center the page content with mobile-friendly side padding. */
+main,
+footer {
+  width: min(calc(100% - 2 * var(--space-3)), var(--max-width));
+  margin-inline: auto;
+}
+
+main {
+  padding-block: var(--space-5);
+}
+
+/* Offset anchor targets so the sticky header does not cover section headings. */
+section {
+  min-width: 0;
+  margin-block: 0 var(--space-5);
+  scroll-margin-top: 9rem;
+}
+
+section > h2 {
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.04em;
+}
+
+section > p {
+  color: var(--color-muted);
+}
+
+/* Stack the introduction and responsive portrait for narrow viewports. */
+#about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: 0 1rem 2.5rem rgb(23 42 53 / 5%);
+}
+
+#about > h2 {
+  margin: 0;
+}
+
+#about > p {
+  font-size: 1.05rem;
+}
+
+#about > img {
+  width: min(100%, 300px);
+  aspect-ratio: 1;
+  justify-self: center;
+  border-radius: calc(var(--radius) * 0.75);
+  object-fit: cover;
+  background: var(--color-image-bg);
+}
+
+/* Show skills as wrapping badges that remain usable on narrow screens. */
+#skills ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+#skills li {
+  max-width: 100%;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+  font-weight: 650;
+}
+
+/* Lay project cards out in a grid that fits the available screen width. */
+#projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-3);
+}
+
+#projects > h2 {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+#projects article {
+  display: flex;
+  min-width: 0;
+  min-height: 200px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: 0 0.5rem 1.5rem rgb(23 42 53 / 5%);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+#projects article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 2rem rgb(23 42 53 / 12%);
+}
+
+#projects article p {
+  flex-grow: 1;
+  color: var(--color-muted);
+}
+
+/* Arrange contact information into a flexible list of links. */
+#contact > p {
+  margin-bottom: var(--space-3);
+}
+
+#contact ul {
+  justify-content: flex-start;
+}
+
+/* Separate the footer from the main content with a quiet border. */
+footer {
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+/* Reduce animation for visitors who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Use a two-column introduction and inline navigation on tablet widths. */
+@media (min-width: 768px) {
+  header {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  header > p {
+    font-size: 0.72rem;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  nav,
+  nav.is-open {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  nav ul {
+    justify-content: flex-end;
+    gap: var(--space-2) var(--space-3);
+  }
+
+  main,
+  footer {
+    width: min(calc(100% - 2 * var(--space-4)), var(--max-width));
+  }
+
+  main {
+    padding-block: var(--space-6);
+  }
+
+  section {
+    margin-bottom: var(--space-6);
+    scroll-margin-top: 7rem;
+  }
+
+  #about {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 280px);
+    gap: var(--space-3) var(--space-5);
+    padding: var(--space-5);
+  }
+
+  #about > h2 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #about > p {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  #about > img {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 100%;
+  }
+
+  #projects {
+    gap: var(--space-4);
+  }
+}
+
+/* Increase whitespace and card proportions for wide desktop screens. */
+@media (min-width: 1024px) {
+  header {
+    padding-block: var(--space-4);
+  }
+
+  nav ul {
+    gap: var(--space-2) var(--space-4);
+  }
+
+  #about {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    gap: var(--space-6);
+    padding: var(--space-6);
+  }
+
+  #projects article {
+    min-height: 220px;
+    padding: var(--space-5);
+  }
+}
