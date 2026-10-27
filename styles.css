@@ -132,7 +132,9 @@ a:hover {
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
   border-radius: var(--space-1);
   outline: 3px solid var(--color-accent);
   outline-offset: 4px;
@@ -361,6 +363,27 @@ section > p {
   color: var(--color-muted);
 }
 
+/* Reveal cards gently as they enter the viewport in supporting browsers. */
+@supports (animation-timeline: view()) {
+  #projects article {
+    animation: project-card-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  @keyframes project-card-reveal {
+    from {
+      opacity: 0.65;
+      translate: 0 12px;
+    }
+
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+}
+
 /* Arrange contact information into a flexible list of links. */
 #contact > p {
   margin-bottom: var(--space-3);
@@ -368,6 +391,51 @@ section > p {
 
 #contact ul {
   justify-content: flex-start;
+}
+
+#contact form {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 38rem;
+  margin-top: var(--space-4);
+}
+
+#contact form > div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+#contact label {
+  font-weight: 650;
+}
+
+#contact input,
+#contact textarea {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+#contact textarea {
+  resize: vertical;
+}
+
+#contact form button {
+  justify-self: start;
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#contact form button:hover {
+  background: var(--color-accent-strong);
 }
 
 /* Separate the footer from the main content with a quiet border. */
