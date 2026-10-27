@@ -11,6 +11,8 @@
   --color-accent-soft: #e8f4f2;
   --color-accent-strong: #075e57;
   --color-image-bg: #e8f1ef;
+  --color-bg-glow: rgb(8 127 117 / 10%);
+  --color-bg-glow-soft: rgb(8 127 117 / 5%);
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 1rem;
@@ -35,6 +37,8 @@
     --color-accent-soft: #213d3b;
     --color-accent-strong: #91eadb;
     --color-image-bg: #213d3b;
+    --color-bg-glow: rgb(91 214 195 / 10%);
+    --color-bg-glow-soft: rgb(91 214 195 / 5%);
   }
 }
 
@@ -57,7 +61,10 @@ html {
 body {
   min-width: 0;
   min-height: 100vh;
-  background: var(--color-bg);
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(ellipse at 8% 8%, var(--color-bg-glow), transparent 34rem),
+    radial-gradient(ellipse at 92% 38%, var(--color-bg-glow-soft), transparent 40rem);
   color: var(--color-text);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
